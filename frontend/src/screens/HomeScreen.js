@@ -9,8 +9,8 @@ import { listProducts } from "../actions/productActions";
 import { listTopSellers } from "../actions/userActions";
 import { Link } from "react-router-dom";
 import Home from "./Home";
-import { Carousel } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { Carousel, Row, Col } from "react-bootstrap";
+import Container from "../../node_modules/react-bootstrap/esm/Container";
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -68,12 +68,18 @@ export default function HomeScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
-          <div className="row center">
-            {products.map((product) => (
-              <Product key={product._id} product={product}></Product>
-            ))}
-          </div>
+          <Container>
+            {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
+            <div>
+              <Row sm={4}>
+                {products.map((product) => (
+                  <Col sm={2}>
+                    <Product key={product._id} product={product}></Product>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          </Container>
         </>
       )}
     </div>
