@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { Carousel } from 'react-responsive-carousel';
-import Product from '../components/Product';
-import LoadingBox from '../components/LoadingBox';
-import MessageBox from '../components/MessageBox';
-import { useDispatch, useSelector } from 'react-redux';
-import { listProducts } from '../actions/productActions';
-import { listTopSellers } from '../actions/userActions';
-import { Link } from 'react-router-dom';
-import Home from './Home';
+import React, { useEffect } from "react";
+// import "react-responsive-carousel/lib/styles/carousel.min.css";
+// import { Carousel } from "react-responsive-carousel";
+import Product from "../components/Product";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "../actions/productActions";
+import { listTopSellers } from "../actions/userActions";
+import { Link } from "react-router-dom";
+import Home from "./Home";
+import { Carousel } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -37,15 +39,25 @@ export default function HomeScreen() {
       ) : (
         <>
           {sellers.length === 0 && <MessageBox>No Seller Found</MessageBox>}
-          <Carousel showArrows autoPlay showThumbs={false}>
-            {sellers.map((seller) => (
-              <div key={seller._id}>
-                <Link to={`/seller/${seller._id}`}>
-                  <img src={seller.seller.logo} alt={seller.seller.name} />
-                  <p className="legend">{seller.seller.name}</p>
-                </Link>
-              </div>
-            ))}
+          <Carousel>
+            {/* <Carousel showArrows autoPlay showThumbs={false}> */}
+            <Carousel.Item>
+              {sellers.map((seller) => (
+                <div key={seller._id}>
+                  <Link to={`/seller/${seller._id}`}>
+                    <img
+                      className="d-block w-100"
+                      src={seller.seller.logo}
+                      alt={seller.seller.name}
+                      style={{ width: "400px", height: "400px" }}
+                    />
+                    <Carousel.Caption>
+                      <p>{seller.seller.name}</p>
+                    </Carousel.Caption>
+                  </Link>
+                </div>
+              ))}
+            </Carousel.Item>
           </Carousel>
         </>
       )}
