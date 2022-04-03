@@ -9,8 +9,9 @@ import { listProducts } from "../actions/productActions";
 import { listTopSellers } from "../actions/userActions";
 import { Link } from "react-router-dom";
 import Home from "./Home";
-import { Carousel, Row, Col } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
 import Container from "../../node_modules/react-bootstrap/esm/Container";
+import { Grid } from "@mui/material";
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -41,8 +42,9 @@ export default function HomeScreen() {
           {sellers.length === 0 && <MessageBox>No Seller Found</MessageBox>}
           <Carousel>
             {/* <Carousel showArrows autoPlay showThumbs={false}> */}
-            <Carousel.Item>
-              {sellers.map((seller) => (
+
+            {sellers.map((seller) => (
+              <Carousel.Item>
                 <div key={seller._id}>
                   <Link to={`/seller/${seller._id}`}>
                     <img
@@ -56,8 +58,8 @@ export default function HomeScreen() {
                     </Carousel.Caption>
                   </Link>
                 </div>
-              ))}
-            </Carousel.Item>
+              </Carousel.Item>
+            ))}
           </Carousel>
         </>
       )}
@@ -71,13 +73,13 @@ export default function HomeScreen() {
           <Container>
             {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
             <div>
-              <Row sm={4}>
+              <Grid container>
                 {products.map((product) => (
-                  <Col sm={2}>
+                  <Grid item xs={2} style={{ margin: "40px" }}>
                     <Product key={product._id} product={product}></Product>
-                  </Col>
+                  </Grid>
                 ))}
-              </Row>
+              </Grid>
             </div>
           </Container>
         </>
